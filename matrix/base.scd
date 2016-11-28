@@ -1,0 +1,1 @@
+Pbind(\degree, Pn(PAT.melody) ,\dur, Pn(RYTHME.object)).trace
