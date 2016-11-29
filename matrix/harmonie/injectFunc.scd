@@ -21,7 +21,7 @@
 				tmp;
 			})
 		}.differentiate.addFirst(0);
-		~squelette=res.postln.collect(~rea.res(_));
+		~squelette=res.collect(~rea.res(_));
 		~squelette.inject([~accord],
 			{arg a,b; ~realisation=~realisation.add(a.last+b)})
 	}.inEnvir(un)

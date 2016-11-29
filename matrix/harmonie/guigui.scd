@@ -4,5 +4,7 @@
 		un.gui(parent:par);
 		p.put(\listGuiReal,EZListView(par,bounds:80@170));
 		p.put(\listGuiNotes,EZListView(par,bounds:80@170));
+		// return the object
+		un
 	});
 }

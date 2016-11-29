@@ -3,7 +3,7 @@ EnvironmentRedirect().make{ arg s;
 	~seed=Harmonie.mat.g;
 	~state=();
 	~epp=EventPatternProxy(Plazy{
-		Pbind(\degree,Plazy{s[\seed]}).trace;
+		Pbind(\degree,Plazy{s[\seed].envir}).trace;
 	}.collect{arg ev; s[\state]=ev.degree; Rest()});
 	~mel=Pbind( 
 		\type, \appo,

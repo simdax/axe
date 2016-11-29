@@ -1,6 +1,6 @@
 ().make{ arg s;
 // the grammatical base => one step = one harmonic third above
-~baseMvt=(-2);
+//~baseMvt=(-2);
 // nb of notes for one chord (only 3 or 4)
 ~sst=3;
 // we need an internal state
