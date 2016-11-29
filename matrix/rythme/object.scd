@@ -13,13 +13,20 @@ joe:{arg s,a,b; (a * s[\bob].(b)).ns * a.sum }
 
 // object
 var a=EnvironmentRedirect().envir_((
-	// private
-	f:f,
-	res:{arg s;
-		s.list=s.f.joe(s.f[\k].(s.args).flat,s.swing) * s.time
+	list:[],
+	// public
+	time:4, args:[], swing:[1],
+	seed:{3.xrand}, decoupe:[3,2]
+).parent_((
+	g:{arg s;
+		s.gui; s
 	},
+	f:f,
+	res:{arg s; s.use{
+		~args.isEmpty.if {s.localPut(\args,~seed ! ~decoupe)};
+		~list=f.joe(f[\k].(~args.postln).flat,~swing) * ~time
+	}; s},
 	// interface
-	time:4, args:[[3,3,2],[[1,1],[1,2],1]], swing:[1],
 	setArgs:{arg s,level,val; s.args[level]=val; s.res},
 	setArgsGlobal:{arg s,val; s.args=s.args+val; s.res},
 	setArgsRecursiv:{ arg s,val,level;
@@ -30,16 +37,17 @@ var a=EnvironmentRedirect().envir_((
 	// embedding
 	coun:0,
 	embedInStream:{arg s, in;
-		s.list ?? {s.res}; s.coun=0;
+		s.list ?? {s.res}; s.parent.coun=0;
 		p{ var res; while{res=(s.list @ s.coun); res.notNil}{
-			res.yield; s.coun=s.coun+1;
+			res.yield; s.parent.coun=s.coun+1;
 		}}.embedInStream(in);  in
 	},
-))
+)))
 .dispatch_{arg k,v;
 	var size=a.list.size;
-	[\time,\args,\swing].includes(k).if{
-		a.res; if(a.list.size>size){a.coun=0}
+	[\decoupe, \seed].includes(k).if{a.args=[]};
+	[\time,\args,\swing,\decoupe,\seed].includes(k).if{
+		a.res; if(a.list.size>size){a.envir.parent.coun=0}
 	};
 };
 a

@@ -1,5 +1,14 @@
 // generates multiple voices
-LazyEnvir().know_(true).make{
+
+(
+var a;
+Event.addEventType(\score, {
+	~dur=~dur/a.rythme;
+	~type=\appo;
+	currentEnvironment.play
+})
+
+a=LazyEnvir().know_(true).make{
 	~env=PAT.envirPoly;
 	~nbVoix=6; ~notes=8; 
 	~rythme=RYTHME.object.setArgsRecursiv({3.xrand}!3,2);
@@ -9,6 +18,7 @@ LazyEnvir().know_(true).make{
 	~res={
 		~dicts=~rotations.value.collect{arg x;
 			(
+				type:\score,
 				degree:~mel.value.rotate(x),
 				dur:~rythme.value.list.rotate(x)
 			)
@@ -18,8 +28,9 @@ LazyEnvir().know_(true).make{
 		}
 	}
 }.dispatch_{ arg k,v, s;
-	s.res;
-}
+	a.res;
+};
 
+a
 
-
+)

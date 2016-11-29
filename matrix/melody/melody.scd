@@ -1,6 +1,12 @@
 (
 // functions helper
-var f=(inv:{arg x; x.asBoolean.not.asInt});
+var f=(
+	inv:{arg x; x.asBoolean.not.asInt},
+	convert:{arg s, mel; mel.collect({|x|
+		x.asBinaryDigits(3)
+	}).flop
+	}
+);
 
 // main object
 var a=(
@@ -8,8 +14,9 @@ var a=(
 	rows:3,cols:8,  genSeed:{2.rand},
 	//// PRIVATE
 	doMatrix:{arg s; s.use{
-		~matrix=(~seed ? ~genSeed) ! [~rows, ~cols]}
-	},
+		~matrix=  ~mel !? {f.convert(~mel)}
+		?? { ~genSeed ! [~rows, ~cols]} 
+	}; s},
 	setMatrix:{arg s,val,row,col;
 		if(val.class==Symbol){val=f[val]};
 		s.use{ ~matrix.slicePut(val,row,col) }; s.res;
@@ -20,7 +27,10 @@ var a=(
 		~list=( ~matrix * s.sstructure).sum
 	}}
 );
+// PRIVATE
 EnvironmentRedirect().envir_(a.putAll((
+	// GUI
+	g:PAT.melodyGui,
 		// embedding
 	coun:0,
 	embedInStream:{arg s, in;
@@ -35,7 +45,7 @@ EnvironmentRedirect().envir_(a.putAll((
 	k.switch(
 		\matrix, {a.res}
 	);
-	[\rows,\cols,\seed].includes(k).if{
+	[\rows,\cols,\seed,\mel].includes(k).if{
 		"dispatché".postln;
 		//update
 		a.doMatrix; a.res; 
