@@ -2,9 +2,6 @@
 var a={arg x; x-(x.mean)};
 var b={arg x; (x.sum+a.(x))/x.sum};
 
-PdefAllGui();
-s.boot; s.makeGui;
-
 Event.addEventType(\appo,{ arg self;
 	var dur,add;
 	~degree=(~degree+~mtranspose).degreeToKey(~arpege?[0,2,4],7);

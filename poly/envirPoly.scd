@@ -1,46 +1,60 @@
 // generates a placeholder for voices
 EnvironmentRedirect().make{ arg s;
+	~default={
+		// default keys TODO make "default"
+		~instrument=\cheappiano;
+	}; 
 	~seed=Harmonie.mat.g; ~cantusFirmus=PAT.base;
-	~harmo=(); 	~mel=();
-	~quant=4;
-	~epp=EventPatternProxy(
-		Pbind(\arpege,Plazy{s[\seed].envir})
-		.collect{arg ev; s[\harmo].putAll(ev); Rest()}
-	).quant_([~quant,0,0]);
-	~epp2=EventPatternProxy(
-		Pbind(*s[\cantusFirmus].asPairs).trace
-		.collect{arg ev; s[\mel].putAll(ev); Rest(ev.dur)}
-	).quant_([~quant,0,0]);
-	~voix=Pbind( )
-	<> Pfunc{s[\mel].putAll(s[\harmo])};
+	~quant=4;	~vv=();
 	~forward={arg s, sel ... args;
-		// automatic creates 
-		s.put(sel,())
-	}
+		sel.switch(
+			\list,{s.vv.keys.postln},
+			{ s.vv.at(sel) ?? {"rien mec".warn} }
+		)
+	};
+	~play=	Plambda(
+		Ppar([
+			Plet(\bouzin,Pbind(
+				\type, \rest,
+				[\degree,\dur],
+				Pbind(*s[\cantusFirmus].asPairs).collect(_.values),
+				\arpege, p{ arg in;
+					var accord=s[\seed].asStream;
+					var n={accord.next};
+					// yield first
+					loop{in=n.value.yield};
+					// loop{
+					// 	if(n.includes(in.degree).not){
+							
+					// 	}{
+							
+					// 	}
+					// }
+				},
+			)),
+			Plazy
+			{ arg in; 
+				Ppar(s[\vv]).finDur(s.quant)
+			}.repeat <>
+			Pbind(\type, \note) <> Pget(\bouzin,(),inf)
+		])
+	);	
 }.know_(true)
 .dispatch_{arg k,v,s;
-	// fill an envir with a new pattern
 	k.switch(
-		// this is a trick, since degree is just a collector for main pattern epp, it should not be overiden
-		\state, {}, 
-		\quant,{
-			s.kvdo{arg k,v;
-				Pdef(k).align(v)
-			}
+		\quant,{ // TODO big trc a faire la...
+			// s.kvdo{arg k,v;
+			// 	Pdef(k).align(v)
+			// }
 		},{
-			var res=MyPPE().make{
-				// default keys
-				~instrument=\cheappiano;
-			}; res.putAll(v);
-			s.localPut(k,res);
-			/////////////////
-			s.epp.isPlaying.not.if{s.epp.play};
-			s.epp2.isPlaying.not.if{s.epp2.play};
-			// play bass pattern if necessary
-			Pdef(k,  // res.asPattern <>
-				s.voix.trace(\degree) )
-			.quant_(s.quant)
-			.play
+			if(s.vv.at(k).isNil){
+				var res=MyPPE().make(s[\default]).putAll(v); 
+				s.vv.put(k,res)
+			}{
+				s.vv.at(k).putAll(v);
+			};
+			// do not record it in envir
+			s.localPut(k,nil)
 		}
 	)
 }

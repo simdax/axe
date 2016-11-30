@@ -3,10 +3,6 @@ Window.closeAll;
 Pdef.removeAll;
 a=PAT.envirPoly;
 a.bob=(type:\note);
+a.play.play
 )
 
-Pbind(*a.cantusFirmus.asPairs).trace.play
-
-a.cantusFirmus.degree.pattern
-a.bob
-PdefAllGui()

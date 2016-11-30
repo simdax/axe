@@ -46,8 +46,6 @@ EnvironmentRedirect().envir_(a.putAll((
 		\matrix, {a.res}
 	);
 	[\puissance].includes(k).if{
-		"dispatché".postln;
-		//update
 		a.doMatrix; a.res; 
 		if(a.list.size>size){a.coun=0}
 	}
