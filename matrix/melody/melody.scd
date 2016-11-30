@@ -24,7 +24,7 @@ var a=(
 	sstructure: {arg s; s.use{(~puissance.pow(_)) ! ~rows}},
 	res:{arg s;  s.use{
 		~matrix ?? {s.doMatrix};
-		~list=( ~matrix * s.sstructure).sum
+		~list=( ~matrix.reverse * s.sstructure).sum
 	}}
 );
 // PRIVATE

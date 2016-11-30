@@ -12,7 +12,7 @@ EnvironmentRedirect().make{ arg s;
 		.collect{arg ev; s[\mel].putAll(ev); Rest(ev.dur)}
 	).quant_([~quant,0,0]);
 	~voix=Pbind( )
-	<> Pfunc{s[\mel]};
+	<> Pfunc{s[\mel].putAll(s[\harmo])};
 	~forward={arg s, sel ... args;
 		// automatic creates 
 		s.put(sel,())

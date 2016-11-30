@@ -4,7 +4,10 @@
 		// checkboxes
 		row.do{arg x,j; a.layout.add(
 			CheckBox().value_(x.asBoolean)
-			.action_{s.setMatrix(\inv,i.asArray,j)}
+			.action_{
+				s.matrix.postln;
+				s.setMatrix(\inv,i.asArray,j);
+				s.matrix.postln}
 			,i,j
 		)};
 		//boutons à la fin

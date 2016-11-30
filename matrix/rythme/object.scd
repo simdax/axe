@@ -18,7 +18,7 @@ var a=EnvironmentRedirect().envir_((
 	// public
 	time:4, args:[], swing:[1],
 	round:1,quantize:1, strength:0,
-	seed:{3.xrand}, decoupe:[3,[2]]
+	seed:{3.xrand}, decoupe:[2,[4,4]]
 ).parent_((
 	specs:(quantize:[0,1,5],strength:\unipolar,round:[0.001,2]),
 	g:{arg s;
