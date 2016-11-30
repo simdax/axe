@@ -1,14 +1,15 @@
 (
 // core Funcs
 var f=(
-k:{arg zzz;
-	zzz.collect{arg x; if(x.isCollection)
-		{x.deepCollect(x.maxDepth-1,{arg x; x.asArray.ns})}{x}}
-	.flop
-	.collect(_.reduce('*'))
-},
-bob:{arg z; z.ns.collect(z.mean*_)},
-joe:{arg s,a,b; (a * s[\bob].(b)).ns * a.sum }
+	k:{arg s,zzz;
+		zzz.collect{arg x; if(x.isCollection)
+			{x.deepCollect(x.maxDepth-1,{arg x; x.asArray.ns})}{x}}
+		.flop
+		.collect(_.reduce('*'))
+	},
+	bob:{arg s,z; z.ns.collect(z.mean*_)},
+	swingify:{arg s,a,b; (a * s.bob(b)).ns * a.sum },
+	go:{arg s, args, swing; s.swingify(s.k(args),swing)}
 );
 
 // object
@@ -16,15 +17,32 @@ var a=EnvironmentRedirect().envir_((
 	list:[],
 	// public
 	time:4, args:[], swing:[1],
-	seed:{3.xrand}, decoupe:[3,2]
+	round:1,quantize:1, strength:0,
+	seed:{3.xrand}, decoupe:[3,[2]]
 ).parent_((
+	specs:(quantize:[0,1,5],strength:\unipolar,round:[0.001,2]),
 	g:{arg s;
-		s.gui; s
+		var w=s.gui(bounds: 400@150);
+		w.parent.bounds_(w.bounds+Rect(0,0,0,30));
+		s.envir.parent.put(
+			\meanGui,StaticText(w.parent,40@20).value_(s.mean)
+		);
+		s
 	},
 	f:f,
+	gen:{~decoupe.collect{ arg c; var f=thisFunction;
+		if(c.isCollection){
+			c.collect(f.(_))
+		}{~seed !c}
+	}},
 	res:{arg s; s.use{
-		~args.isEmpty.if {s.localPut(\args,~seed ! ~decoupe)};
-		~list=f.joe(f[\k].(~args.postln).flat,~swing) * ~time
+		~args.isEmpty.if {s.localPut(\args,~gen.())};
+		~list=f.go(~args,~swing) * ~time;
+		~list=~list.flatten;
+		~list=~list.collect({|x| 
+			x.quantize(~round,~quantize,~strength)
+			.round(0.01)
+		});  try{~meanGui.value_(~list.mean.postln)}
 	}; s},
 	// interface
 	setArgs:{arg s,level,val; s.args[level]=val; s.res},
@@ -43,11 +61,14 @@ var a=EnvironmentRedirect().envir_((
 		}}.embedInStream(in);  in
 	},
 )))
-.dispatch_{arg k,v;
-	var size=a.list.size;
+.dispatch_{arg k,v; 
+	var size=a.list.size;//k.postln;
 	[\decoupe, \seed].includes(k).if{a.args=[]};
-	[\time,\args,\swing,\decoupe,\seed].includes(k).if{
-		a.res; if(a.list.size>size){a.envir.parent.coun=0}
+	[\time,\args,\swing,\decoupe,\seed,
+		\strength,\quantize,\round].includes(k).if{
+		a.res;
+		//embedding
+		if(a.list.size>size){a.envir.parent.coun=0}
 	};
 };
 a

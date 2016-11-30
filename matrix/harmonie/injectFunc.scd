@@ -1,10 +1,10 @@
-// this is just a function that inject
+ // this is just a function that inject
 // it cares also with ambitus management
 { arg un,p;
 	p.put(\rea,Harmonie.rea);
 	p.put(\go, { var res;
 		~realisation=nil;
-		~rea.rot=0; 
+		~rea.rot=0; ~rea.sst=~accord.size;
 		res=~parcours.use{ arg s;
 			var tmp=0;
 			s.localPut(\dir, ~dir.extend(~list.size));
@@ -23,7 +23,9 @@
 		}.differentiate.addFirst(0);
 		~squelette=res.collect(~rea.res(_));
 		~squelette.inject([~accord],
-			{arg a,b; ~realisation=~realisation.add(a.last+b)})
+			{arg a,b; ~realisation=~realisation.add(a.last+b)}
+		);
+		un
 	}.inEnvir(un)
 	);
 }

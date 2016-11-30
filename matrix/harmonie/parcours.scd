@@ -1,8 +1,9 @@
 {arg un;
 	EnvironmentRedirect().make{ arg deux;
 		deux.envir.parent.put(\specs,
-			(nb:[3,8,0,1],sommeVecteurs:[0,7,0,1])
+			(nb:[0,8,0,1],sommeVecteurs:[0,7,0,1])
 		);
+		//		~accord=[0,2,4]; ~depart=0;
 		~base=(-2); ~sommeVecteurs=0; ~nb=4; ~ambitus=[-3,3];
 		~vecteurs=[-3,-2,-1,0,1,2,3]; ~wVec=[0,0,0,0,2,2,1];
 		~nop=[6]; ~list=[un[\depart]];
@@ -26,13 +27,16 @@
 		\list, {}, \p, {}, 
 		{
 			un.use{
-				switch(k, \nb,
-					{~parcours.dir=~parcours.dir.wrapExtend(v)}
-				);
-			~parcours.p; ~go.value;
-			//gui
-			~listGuiReal.items_(un.realisation.collect(_.asString));
-			~listGuiNotes.items_(un.squelette.collect(_.asString))}
+				~parcours.use{
+					switch(k, \nb,
+						{~dir=~dir.wrapExtend(v)}
+					);
+					~p.value
+				};
+				~go.value;
+				//gui
+				~listGuiReal.items_(un.realisation.collect(_.asString));
+				~listGuiNotes.items_(un.squelette.collect(_.asString))}
 		},
 	)})
 }

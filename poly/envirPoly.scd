@@ -1,14 +1,17 @@
 // generates a placeholder for voices
 EnvironmentRedirect().make{ arg s;
-	~seed=Harmonie.mat.g;
-	~state=();
-	~epp=EventPatternProxy(Plazy{
-		Pbind(\degree,Plazy{s[\seed].envir}).trace;
-	}.collect{arg ev; s[\state]=ev.degree; Rest()});
-	~mel=Pbind( 
-		\type, \appo,
-		\scale, Pfunc{s[\state]}
+	~seed=Harmonie.mat.g; ~cantusFirmus=PAT.base;
+	~harmo=(); 	~mel=();
+	~epp=EventPatternProxy(
+		Pbind(\scale,Plazy{s[\seed].envir})
+		.collect{arg ev; s[\harmo].putAll(ev); Rest()});
+	~epp2=EventPatternProxy(
+		Pbind(*s[\cantusFirmus].asPairs)
+		.collect{arg ev; s[\mel].putAll(ev); Rest()}
 	);
+	~voix=Pbind( 
+		\type, \appo,
+	) <> Pfunc{s[\harmo].putAll(s[\mel])};
 	~quant=4;
 	~forward={arg s, sel ... args;
 		// automatic creates 
@@ -28,14 +31,13 @@ EnvironmentRedirect().make{ arg s;
 			var res=MyPPE().make{
 				// default keys
 				~instrument=\cheappiano;
-				~degree=0; ~dur=1; ~appo=[0];
-				~mtranspose=0;
 			}; res.putAll(v);
 			s.localPut(k,res);
 			/////////////////
 			s.epp.isPlaying.not.if{s.epp.play};
+			s.epp2.isPlaying.not.if{s.epp2.play};
 			// play bass pattern if necessary
-			Pdef(k, s.mel <> res.asPattern)
+			Pdef(k,  res.asPattern <> s.voix )
 			.quant_(s.quant)
 			.play
 		}

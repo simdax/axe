@@ -11,7 +11,7 @@ var f=(
 // main object
 var a=(
 	//// INTERFACE
-	rows:3,cols:8,  genSeed:{2.rand},
+	rows:3,cols:8,  genSeed:{2.rand}, puissance:2,
 	//// PRIVATE
 	doMatrix:{arg s; s.use{
 		~matrix=  ~mel !? {f.convert(~mel)}
@@ -21,7 +21,7 @@ var a=(
 		if(val.class==Symbol){val=f[val]};
 		s.use{ ~matrix.slicePut(val,row,col) }; s.res;
 	},
-	sstructure: {arg s; s.use{(2.pow(_)) ! ~rows}},
+	sstructure: {arg s; s.use{(~puissance.pow(_)) ! ~rows}},
 	res:{arg s;  s.use{
 		~matrix ?? {s.doMatrix};
 		~list=( ~matrix * s.sstructure).sum
@@ -45,7 +45,7 @@ EnvironmentRedirect().envir_(a.putAll((
 	k.switch(
 		\matrix, {a.res}
 	);
-	[\rows,\cols,\seed,\mel].includes(k).if{
+	[\puissance].includes(k).if{
 		"dispatché".postln;
 		//update
 		a.doMatrix; a.res; 

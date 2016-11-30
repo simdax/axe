@@ -8,6 +8,7 @@ s.boot; s.makeGui;
 Event.addEventType(\appo,{ arg self;
 	var dur,add;
 	~degree=(~degree+~mtranspose).degreeToKey(~scale?[0,2,4],7);
+	~dur=~dur*((~rythme?1) * (~absolu.asBoolean.if{~dur.reciprocal}{1}));
 	~mtranspose=0;
 	~scale=Scale.at(~mode?\major);
 	~appo ?? {~appo=0};
@@ -18,6 +19,7 @@ Event.addEventType(\appo,{ arg self;
 		~type=\sfz; ~inst=~instrument.asString.drop(4).asInt;
 	}{~type=\note};
 	Pbind(\degree,add.iter+~degree, \dur, dur.ns.iter*~dur)
+	//	.trace([\degree,\mtranspose,\dur])
 	.play(protoEvent:currentEnvironment);
 });
 )
