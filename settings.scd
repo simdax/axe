@@ -7,10 +7,10 @@ s.boot; s.makeGui;
 
 Event.addEventType(\appo,{ arg self;
 	var dur,add;
-	~degree=(~degree+~mtranspose).degreeToKey(~scale?[0,2,4],7);
+	~degree=(~degree+~mtranspose).degreeToKey(~arpege?[0,2,4],7);
 	~dur=~dur*((~rythme?1) * (~absolu.asBoolean.if{~dur.reciprocal}{1}));
 	~mtranspose=0;
-	~scale=Scale.at(~mode?\major);
+	//	~scale=Scale.at(~mode?\major);
 	~appo ?? {~appo=0};
 	add=Array.series(~appo.abs+1,~appo,~appo.sign.neg);
 	dur=b.((~swing?[1]).wrapExtend(~appo.abs+1));

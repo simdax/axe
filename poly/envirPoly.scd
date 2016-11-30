@@ -2,17 +2,17 @@
 EnvironmentRedirect().make{ arg s;
 	~seed=Harmonie.mat.g; ~cantusFirmus=PAT.base;
 	~harmo=(); 	~mel=();
-	~epp=EventPatternProxy(
-		Pbind(\scale,Plazy{s[\seed].envir})
-		.collect{arg ev; s[\harmo].putAll(ev); Rest()});
-	~epp2=EventPatternProxy(
-		Pbind(*s[\cantusFirmus].asPairs)
-		.collect{arg ev; s[\mel].putAll(ev); Rest()}
-	);
-	~voix=Pbind( 
-		\type, \appo,
-	) <> Pfunc{s[\harmo].putAll(s[\mel])};
 	~quant=4;
+	~epp=EventPatternProxy(
+		Pbind(\arpege,Plazy{s[\seed].envir})
+		.collect{arg ev; s[\harmo].putAll(ev); Rest()}
+	).quant_([~quant,0,0]);
+	~epp2=EventPatternProxy(
+		Pbind(*s[\cantusFirmus].asPairs).trace
+		.collect{arg ev; s[\mel].putAll(ev); Rest(ev.dur)}
+	).quant_([~quant,0,0]);
+	~voix=Pbind( )
+	<> Pfunc{s[\mel]};
 	~forward={arg s, sel ... args;
 		// automatic creates 
 		s.put(sel,())
@@ -37,7 +37,8 @@ EnvironmentRedirect().make{ arg s;
 			s.epp.isPlaying.not.if{s.epp.play};
 			s.epp2.isPlaying.not.if{s.epp2.play};
 			// play bass pattern if necessary
-			Pdef(k,  res.asPattern <> s.voix )
+			Pdef(k,  // res.asPattern <>
+				s.voix.trace(\degree) )
 			.quant_(s.quant)
 			.play
 		}

@@ -1,10 +1,12 @@
 (
+Window.closeAll;
 Pdef.removeAll;
 a=PAT.envirPoly;
-a.bob=(mtranspose:[0]);
+a.bob=(type:\note);
 )
 
-a[\harmo]
+Pbind(*a.cantusFirmus.asPairs).trace.play
 
 
-a.mel
+a.bob
+PdefAllGui()
