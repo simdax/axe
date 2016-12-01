@@ -4,7 +4,7 @@ s.boot
 // simple example
 (
 a=PAT.envirPoly;
-a.play.play
+a.pattern.play
 )
 a.io=(amp:0.4,appo:[0], rythme:[0.35]);
 a.jo=(amp:0,dur:[0.5,1,2,0.5,0.5]/2, octave:6);
