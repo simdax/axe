@@ -1,1 +1,1 @@
-sclang -a -l ./conf.yaml main.scd
+sclang -a -l ./conf.yaml 

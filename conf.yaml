@@ -1,5 +1,10 @@
 includePaths:
 - /home/simdax/prog/SC/supercollider/SCClassLibrary/
 - /home/simdax/.local/share/SuperCollider/Extensions/axe/
-- /home/simdax/.local/share/SuperCollider/Extensions/app/
 - /home/simdax/.local/share/SuperCollider/downloaded-quarks/supercollider-sfz/
+- /home/simdax/.local/share/SuperCollider/Extensions/app/
+#- /home/simdax/.local/share/SuperCollider/Extensions/myLazyEnvir/
+# - /home/simdax/.local/share/SuperCollider/Extensions/app/
+# - /home/simdax/.local/share/SuperCollider/Extensions/app/
+# - /home/simdax/.local/share/SuperCollider/Extensions/app/
+

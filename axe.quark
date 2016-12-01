@@ -1,7 +1,8 @@
 (
-          name: "axe",
-  dependencies: [
-	  "http://github.com/simdax/supercollider-sfz",
-	  "http://github.com/simdax/app"	
-  ],
+name: "axe",
+dependencies: [
+	"API",	
+	"http://github.com/simdax/supercollider-sfz",
+	"http://github.com/simdax/app"	
+],
 )
