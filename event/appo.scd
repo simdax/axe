@@ -2,7 +2,7 @@
 var a={arg x; x-(x.mean)};
 var b={arg x; (x.sum+a.(x))/x.sum};
 
-Event.addEventType(\appo,{ arg self;
+Event.addEventType(\appo,{
 	var dur,add;
 	~degree=(~degree+~mtranspose).degreeToKey(~arpege?[0,2,4],7);
 	~dur=~dur*((~rythme?1) * (~absolu.asBoolean.if{~dur.reciprocal}{1}));

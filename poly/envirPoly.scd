@@ -1,47 +1,43 @@
 // generates a placeholder for voices
 EnvironmentRedirect().make{ arg s;
+	//	s.put('proto_',{arg s,dict; s.proto_(dict)})
 	~default={
 		// default keys TODO make "default"
 		~instrument=\cheappiano;
-	}; 
+	}; ~def=Pbind(\type, \note,\instrument, \cheappiano);
 	~seed=Harmonie.mat.g; ~cantusFirmus=PAT.base;
-	~quant=4;	~vv=();
+	~quant=4;	~vv=(); ~durHarmo=1;
 	~forward={arg s, sel ... args;
 		sel.switch(
 			\list,{s.vv.keys.postln},
-			{ s.vv.at(sel) ?? {"rien mec".warn} }
+			{ s.vv.at(sel) ?? { 
+				s.postln.use{s.proto.at(sel).value(*args)} ?? {"rien mec".warn}
+			} }
 		)
 	};
-	~play=	Plambda(
+	~pattern=	Plambda(
 		Ppar([
-			Plet(\bouzin,Pbind(
-				\type, \rest,
-				[\degree,\dur],
-				Pbind(*s[\cantusFirmus].asPairs).collect(_.values),
-				\arpege, p{ arg in;
-					var accord=s[\seed].asStream;
-					var n={accord.next};
-					// yield first
-					loop{in=n.value.yield};
-					// loop{
-					// 	if(n.includes(in.degree).not){
-							
-					// 	}{
-							
-					// 	}
-					// }
-				},
+			Plet(\harmo,
+				Pbind(
+					\type, \rest,
+					\arpege, Pstep(
+						Pn(s[\seed]) , Pfunc{s[\durHarmo]}
+					),
+					[\degree,\dur],
+					Pbind(*s[\cantusFirmus].asPairs).collect(_.values),
 			)),
 			Plazy
-			{ arg in; 
-				Ppar(s[\vv]).finDur(s.quant)
-			}.repeat <>
-			Pbind(\type, \note) <> Pget(\bouzin,(),inf)
-		])
+			{ arg in;
+				Ppar(s[\vv]).finDur(s.quant).trace
+			}.repeat <> 
+			Plazy{s[\def]} <>
+			Pget(\harmo,(), inf)
+		]) 
 	);	
 }.know_(true)
 .dispatch_{arg k,v,s;
 	k.switch(
+		\durHarmo, {},
 		\quant,{ // TODO big trc a faire la...
 			// s.kvdo{arg k,v;
 			// 	Pdef(k).align(v)
