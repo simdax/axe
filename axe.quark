@@ -1,17 +1,7 @@
 (
           name: "axe",
-       summary: "",
-        author: "",
-     copyright: "",
-       license: "",
-       version: "0.0.1",
-        schelp: "",
-          test: "",
-           url: "",
   dependencies: [
 	  "http://github.com/simdax/supercollider-sfz",
 	  "http://github.com/simdax/app"	
   ],
-  isCompatible: false,
-         since: ""
 )
