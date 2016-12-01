@@ -2,8 +2,8 @@
 EnvironmentRedirect().make{ arg s;
 	// default keys TODO make "default"
 	~default=(instrument:\cheappiano);
-	~def=Pbind(\type, \note,\instrument, \cheappiano);
-	~seed=Harmonie.mat.g; ~cantusFirmus=PAT.base;
+	~def=Pbind(\type, \note);
+	~seed=Harmonie.mat.g; ~cantusFirmus=PAT.base.g;
 	~time=4; ~repeats=inf; ~reset=true;
 	~vv=(); ~durHarmo=1;
 	~forward={arg s, sel ... args;
@@ -32,7 +32,7 @@ EnvironmentRedirect().make{ arg s;
 		)			// home made pfindur (adaptative)
 		.collect(r{arg in;
 			var chrono=Ptime().asStream;
-			if(s[\reset]){s[\seed].coun=0;};
+			if(s[\reset]){s[\seed].coun=0;s[\cantusFirmus].reSet; \io.postln};
 			while{chrono.next<s.time}{in=in.yield};
 			"bye".postln; 
 		}.repeat(s.repeats.postln))

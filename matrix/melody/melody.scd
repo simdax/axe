@@ -43,7 +43,8 @@ EnvironmentRedirect().envir_(a.putAll((
 .dispatch_{arg k,v;
 	var size=a.list.size;
 	k.switch(
-		\matrix, {a.res}
+		\matrix, {a.res},
+		\coun, {"ioioio".postln}
 	);
 	[\puissance].includes(k).if{
 		a.doMatrix; a.res; 

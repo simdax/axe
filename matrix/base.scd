@@ -1,12 +1,10 @@
-// Pbind(
-// 	\degree, Pn(PAT.melody.doMatrix.g),
-// 	\dur, Pn(RYTHME.object.res.g)
-// ).trace
+// simple interface for a complete Rhythm + Melody voice
 
 (
 degree: PAT.melody.doMatrix,
 dur: RYTHME.object.res,
-g:{arg s; FlowView(bounds:750@300).flow{arg w; s.degree.g(w); s.dur.g(w)}},
+reSet:{arg s; s.dur.coun=0; s.degree.coun=0},
+g:{arg s; FlowView(bounds:750@300).flow{arg w; s.degree.g(w); s.dur.g(w)}; s},
 embedInStream:{ arg s, in=();
 	Pbind(\degree, Pn(s.degree), \dur, Pn(s.dur)).embedInStream(in);
 }

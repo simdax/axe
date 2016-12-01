@@ -4,7 +4,7 @@ Pdef.removeAll;
 a=PAT.envirPoly;
 a.time=1;
 //a.bob=(type:\note);
-a.joe=(type:\appo);
+a.joe=(type:\note);
 a.pattern.play
 )
 
