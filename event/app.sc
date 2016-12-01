@@ -4,7 +4,7 @@ EventTypes : APP {
 		Class.initClassTree(Event);
 		StartUp.add{
 		this.filesDo({arg file;
-			file.absolutePath.postln.load
+			file.absolutePath.load
 		})}
 	}
 }

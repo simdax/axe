@@ -21,15 +21,7 @@ var a=EnvironmentRedirect().envir_((
 	seed:{3.xrand}, decoupe:[2,[4,4]]
 ).parent_((
 	specs:(quantize:[0,1,5],strength:\unipolar,round:[0.001,2]),
-	g:{arg s;
-		var w=s.gui(bounds: 400@150);
-		w.parent.bounds_(w.bounds+Rect(0,0,0,30));
-		s.envir.parent.put(
-			\meanGui,StaticText(w.parent,40@20).value_(s.mean)
-		);
-		s
-	},
-	f:f,
+	g:RYTHME.guigui,	f:f,
 	gen:{~decoupe.collect{ arg c; var f=thisFunction;
 		if(c.isCollection){
 			c.collect(f.(_))

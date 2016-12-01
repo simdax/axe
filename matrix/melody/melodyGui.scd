@@ -1,5 +1,5 @@
-{{arg s;
-	var a=View(Window().front,300@300).layout_(GridLayout());
+{{arg s, win=Window().front, b=300@300;
+	var a=View(win,b).layout_(GridLayout());
 	s.matrix.do{ arg row,i;
 		// checkboxes
 		row.do{arg x,j; a.layout.add(
