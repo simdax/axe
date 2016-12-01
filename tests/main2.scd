@@ -2,9 +2,11 @@
 Window.closeAll;
 Pdef.removeAll;
 a=PAT.envirPoly;
-a.time=1;
-//a.bob=(type:\note);
-a.joe=(type:\note);
+a.time=4;
 a.pattern.play
 )
+
+a.henri=( octave:3, degree:[0,2,3,0,0])
+
+a.time=8
 

@@ -47,10 +47,11 @@ var a=EnvironmentRedirect().envir_((
 	// embedding
 	coun:0,
 	embedInStream:{arg s, in;
-		s.list ?? {s.res}; s.parent.coun=0;
+		s.list ?? {s.res}; s.coun=0;
 		p{ var res; while{res=(s.list @ s.coun); res.notNil}{
-			res.yield; s.parent.coun=s.coun+1;
-		}}.embedInStream(in);  in
+			res.yield;
+			s.coun=s.coun+1; 
+		}}.embedInStream(in);  
 	},
 )))
 .dispatch_{arg k,v; 
