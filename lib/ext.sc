@@ -5,7 +5,7 @@
 	gui{ arg numItems=envir.size,parent,bounds,options;
 		var g=envir.gui(numItems,parent,bounds,options);
 		envir.kvdo{arg k,v;
-			g.addAction(k,{this.dispatch.value(k,v)})
+			g.addAction(k,{this.dispatch.value(k,v, this)})
 		};
 		^g
 	}
