@@ -9,14 +9,15 @@ ER : EnvironmentRedirect{
 		^res
 	}
 	asStream{
-		^envir[\asStream].value(this) ?? {"no 'asstream".warn; this}
+		^envir[\asStream].value(this) ??
+		{"no 'asstream'".warn; this}
 	}
 }
 
-+ EnvironmentRedirect{
-	put { arg key, obj;
-		envir.put(key, obj);
-		dispatch.value(key, obj, envir);
-	}
-}
+// + EnvironmentRedirect{
+// 	put { arg key, obj;
+// 		envir.put(key, obj);
+// 		dispatch.value(key, obj, envir);
+// 	}
+// }
 
