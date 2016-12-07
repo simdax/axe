@@ -1,5 +1,5 @@
 (
-var container=Window("io", Rect(30, 30, 450, 250)).front;
+var container=Window("matrice de ouf malade", Rect(30, 30, 450, 250)).front;
 var a=BoxGrid(container,rows:8, columns:8);
 ~get={
 	a.gridNodes.collect(_.select(_.state))
@@ -14,8 +14,10 @@ var a=BoxGrid(container,rows:8, columns:8);
 	indices.do { |xy| f.value(a.gridNodes.reverse.slice(xy[0],xy[1]))};
 	a.refresh;
 };
-~mels_={arg val; ~mels=val };
-//~addMel={arg val; ~mels=~mels.addval };
+~mels_={arg val; ~mels=val;
+	// () () ()
+	~colorizeMatrix.()};
+~addMel={arg val; ~mels_.(~mels.add(val)) };
 ~setDiag={arg rows, cols,f;
 	var indices=rows+++cols; 
 	indices.do { |xy| f.value(a.gridNodes.slice(xy[0],xy[1]))};
@@ -42,10 +44,6 @@ var a=BoxGrid(container,rows:8, columns:8);
 	a=BoxGrid(container,rows:r, columns:c)
 };
 ~clear={a.clearGrid};
-
-// ~mels_={ arg val; val.postln;
-// 	~mels=val; "fdsfsq".postln
-// };
 ~colorizeMatrix={ arg mels;
 	mels !? {~mels=~mels.add(mels)};
 	~mels ?? {~produceMels.value()};
@@ -53,7 +51,7 @@ var a=BoxGrid(container,rows:8, columns:8);
 	.do { |array|
 		var color=Color.rand; 
 		~setRevDiag.value(array, (..array.size-1),
-			{arg x; x.setColor_(color) ;x.state=true; }
+			{arg x; x.setColor_(color); x.state=true; }
 		);
 	};
 }
@@ -61,3 +59,10 @@ var a=BoxGrid(container,rows:8, columns:8);
 
 
 ~colorizeMatrix.()
+
+(
+a=GuiPoly.testeuh;
+a.addMel([0,1, 1, 1, 1,3]);
+a.colorizeMatrix;
+a.get(78790);
+)
