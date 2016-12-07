@@ -4,10 +4,10 @@ EnvironmentRedirect().make{ arg s;
 	~chrono=Ptime().asStream;
 	~default=(instrument:\cheappiano);
 	~def=Pbind(\type, \appo);
-	~seed=Harmonie.mat.g; ~cantusFirmus=PAT.base.g;
+	~seed=Harmonie.object.g; ~cantusFirmus=PAT.base.g;
 	~time=4; ~repeats=inf; ~reset=true; ~playing=false;
 	~vv=(); ~durHarmo=1; 
-	~forward={arg s, sel ... args;
+	~fo rward={arg s, sel ... args;
 		if(sel==\ppar){}
 		{sel.switch(
 			\list,{s.vv.keys.postln},

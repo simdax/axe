@@ -4,13 +4,14 @@ embedInStream:{arg s,in;
 	p{
 	loop{
 		var r=(s.at(\list) @ s.coun);
-		r ?? {s.coun=0; r=(s.at(\list) @ s.coun)};
+		r ?? {s.parent.coun=0; r=(s.at(\list) @ s.coun)};
 		in=(r?s.defVal).yield;
-		s.coun=s.coun+1;
+		s.parent.coun=s.coun+1;
 	}
 	}.embedInStream(in)
 },
-asStream:{ arg s; s.postln;
+asStream:{ arg s; 
 	Plazy(s).asStream
 }
 )
+
